@@ -65,10 +65,11 @@ STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
+STATIC_URL = '/statics/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    '/Users/linzerd/github/jryy/reserved/statics',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -108,6 +109,7 @@ ROOT_URLCONF = 'reserved.urls'
 WSGI_APPLICATION = 'reserved.wsgi.application'
 
 TEMPLATE_DIRS = (
+    'template',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

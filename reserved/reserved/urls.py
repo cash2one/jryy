@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'reserved.views.home', name='home'),
     # url(r'^reserved/', include('reserved.foo.urls')),
 
+    url(r'^$', 'service.views.detail', name='home'),
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

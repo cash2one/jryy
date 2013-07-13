@@ -89,3 +89,5 @@ class Beautician(models.Model):
     detail = models.TextField(u'详情')
     goodat = models.ManyToManyField(Service)   # 擅长项目 
 
+    class Meta:
+        verbose_name_plural = '美容师'

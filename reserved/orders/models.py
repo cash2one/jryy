@@ -21,6 +21,13 @@ class Customer(models.Model):
     gender = models.IntegerField(u'性别', default=0, choices=GENDER_CHOICES)
     age = models.IntegerField(u'年龄', default=20)
 
+    def __unicode__(self):
+        return nickname
+
+    class Meta:
+        verbose_name_plural = '顾客'
+
+
 
 class Order(models.Model):
     """
@@ -50,6 +57,8 @@ class Order(models.Model):
     create_time = models.DateField(u'创建时间', auto_now_add=True) 
     update_time = models.DateField(u'创建时间', auto_now_add=True) 
     
+    class Meta:
+        verbose_name_plural = '订单'
 
 class OrderDetail(models.Model):
     """
@@ -60,6 +69,8 @@ class OrderDetail(models.Model):
     beautician = models.ForeignKey(Beautician)
     unit = models.IntegerField(u'预约时间', default=0)
 
+    class Meta:
+        verbose_name_plural = '订单'
 
 
 class CustomerPreference(models.Model):
@@ -72,6 +83,9 @@ class CustomerPreference(models.Model):
     fav_SerRoom = models.ForeignKey(SerRoom)
     update_time = models.DateField(u'更新时间', auto_now=True)
 
+    class Meta:
+        verbose_name_plural = '顾客偏好'
+
 
 class OrderComment(models.Model):
     """
@@ -82,6 +96,9 @@ class OrderComment(models.Model):
     content = models.CharField(u'评论', max_length=300)
     create_time = models.DateField(u'评价时间', auto_now=True)
 
+    class Meta:
+        verbose_name_plural = '订单评论'
+
 class BeauticianComment(models.Model):
     """
     美容师评价
@@ -91,3 +108,6 @@ class BeauticianComment(models.Model):
     score = models.IntegerField(u'分数', default=0)
     content = models.CharField(u'评论', max_length=300)
     create_time = models.DateField(u'评价时间', auto_now=True)
+
+    class Meta:
+        verbose_name_plural = '美容师评价'

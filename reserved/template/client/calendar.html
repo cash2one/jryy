@@ -20,7 +20,7 @@
   {% for week in weeks %}
   <week>
         {% for day in week %}
-        <day class="{% if day.today_tag == -1%}unavailable{%elif day.today_tag == 0%}now_part{%elif day.order_status == 1%}part{% elif day.order_status == 2%}full{%else%}{% endif %}"><a href="#">{{ day.datedata.day }}{%if day.today_tag == 0 %}<span>今天</span>{% endif %}</a></day>
+        <day class="{% if day.today_tag == -1%}unavailable{%elif day.today_tag == 0%}now_part{%elif day.order_status == 1%}part{% elif day.order_status == 2%}full{%else%}{% endif %}"><a href="/client/day/{{day.datedata | date:"Ymd" }}">{{ day.datedata.day }}{%if day.today_tag == 0 %}<span>今天</span>{% endif %}</a></day>
         {% endfor %}
   </week>
   {% endfor %}

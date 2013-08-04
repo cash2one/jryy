@@ -30,4 +30,12 @@ def calendar(request):
         weeks.append(days)
     return render_to_response('client/calendar.html', {'weeks':weeks}, context_instance=RequestContext(request))
 
+def day_detail(request, datestr):
+    query_date = datetime.datetime.strptime(datestr, '%Y%m%d')
+    now = datetime.datetime.now()
+    for i in range(10, 22):
+        print i
+    return render_to_response('client/day.html', {'weeks':9}, context_instance=RequestContext(request))
 
+def order(request, datestr):
+    return HttpResponse('ok')

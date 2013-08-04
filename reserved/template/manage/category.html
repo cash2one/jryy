@@ -1,0 +1,24 @@
+{% extends 'manage/base.html' %}
+    {% block content %}
+    <div></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>服务类别</th>
+            <th>详细描述</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ser in sertypes %}
+        <tr>
+            <td>{{ ser.id }}</td>
+            <td>{{ ser.tp_name }}</td>
+            <td>{{ ser.tp_desc }}</td>
+            <td><button class="btn btn-primary" type="button">修改</button> <button class="btn btn-danger" type="button">删除</button></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

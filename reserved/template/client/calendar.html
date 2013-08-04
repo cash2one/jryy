@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>佳人有约</title>
+<link href="/statics/css/all_android.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<header>
+  <h1>佳人有约美容院</h1>
+  <h2>2013年8月</h2>
+  <a href="#"><help>?</help></a>
+</header>
+<cad>
+  <topinfo>
+    <span>周日</span><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span>
+  </topinfo>
+  {% for week in weeks %}
+  <week>
+        {% for day in week %}
+        <day class="{% if day.today_tag == -1%}unavailable{%elif day.today_tag == 0%}now_part{%elif day.order_status == 1%}part{% elif day.order_status == 2%}full{%else%}{% endif %}"><a href="#">{{ day.datedata.day }}{%if day.today_tag == 0 %}<span>今天</span>{% endif %}</a></day>
+        {% endfor %}
+  </week>
+  {% endfor %}
+</cad>
+</body>
+</html>

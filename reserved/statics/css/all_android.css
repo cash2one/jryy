@@ -1,0 +1,38 @@
+@charset "UTF-8";
+* {margin:0; padding:0; font-family:'Roboto',"Droid Sans Fallback", "Microsoft YaHei", "Hiragino Sans GB W3"; font-size:}
+a {text-decoration:none;}
+body {background:#fdfcf0;}
+header {height:90px; background:#9c0; color:#fff; position:relative; padding:80px 0 0 0 ;}
+header h1 {font-size: 28px; font-weight: normal;height:60px; padding:0 0 0 10px;}
+header h2 {font-size: 14px; font-weight:normal; color:#360; line-height:30px; background:rgba(255,255,255,0.3); padding:0 0 0 10px;}
+header help {width:40px; height:40px; position:absolute; top:10px; right:10px; background:url(/statics/img/icon_help.png) no-repeat; background-size:40px 40px; text-indent:-999em;}
+cad {}
+cad topinfo {display:block; line-height:32px; padding:0 1%; background:#cfcfc6; color:#fff; margin:0 0 5px;}
+cad topinfo span{display:inline-block; line-height:32px; width:14%; text-align:center; font-size:12px;}
+cad week {display:block; padding:0 1%; color:#fff;}
+cad day {display:block; float:left; line-height:40px; height:50px; width:14%; text-align:center;}
+cad day a{display:block; margin:5px auto; line-height:40px; height:40px; width:40px; text-align:center; font-size:18px; font-weight:lighter; background:#9c0; border-radius:50%; color:#fff; position:relative;}
+cad day a span{display:block; position:absolute; bottom:4px; line-height:12px; height:12px; width:40px; font-size:0.5em;}
+cad day.now_full a{margin:1px auto; line-height:24px; height:40px; width:40px; background:#e4e1e1; border:#cdccc6 4px solid; text-decoration:line-through; color:#cdccc6;}
+cad day.now_full a span{color:#cdccc6; font-size:0.5em; text-decoration:none;}
+cad day.now_part a{margin:1px auto; line-height:24px; height:40px; width:40px; background:#fed4a4; border:#f93 4px solid; color:#f93;}
+cad day.now_part a span{color:#f93; font-size:0.5em;}
+cad day.now a{margin:1px auto; line-height:24px; height:40px; width:40px; background:#d5e990; border:#9c0 4px solid; color:#9c0;}
+cad day.now a span{color:#9c0; font-size:0.5em;}
+cad day.unavailable a{margin:5px auto; line-height:38px; height:38px; width:38px; background:none; border:#e4e1e1 1px solid; text-decoration:line-through; color:#e4e1e1;}
+cad day.part a{background:#f93;}
+cad day.full a{background:#cfcfc6; color:#9e9c9c; text-decoration:line-through;}
+
+nav {height:50px; background:#9c0; color:#fff; position:relative; padding:10px 0 0 0 ;}
+nav h1 {font-size: 28px; font-weight: normal;height:50px; padding:0 0 0 10px;}
+nav help {width:40px; height:40px; position:absolute; top:10px; right:10px; background:url(/statics/img/icon_help.png) no-repeat; background-size:40px 40px; text-indent:-999em;}
+allday topinfo {display:block; line-height:32px; padding:0 10px; background:#cfcfc6; color:#fff;}
+allday topinfo span{display:block; float:right;}
+allday hour {display:block; line-height:50px; padding:0 0 0 32px; background:url(/statics/img/bg_day_hour.png) left repeat-x; background-size:360px 50px; color:#fff;color:#9c0; font-size:18px;}
+allday hour times.part{color:#f93;}
+allday hour.full{color:#cfcfcf; background:url(/statics/img/bg_day_hour_full.png) left repeat-x; background-size:360px 50px;}
+allday hour people {border:#9c0 1px solid; border-radius:50%; width:36px; height:36px; padding:1px; margin:5px 10px 0 0; float:right;}
+allday hour people .photo img{width:36px; height:36px; border-radius:50%;}
+allday hour people .number {width:36px; height:36px; border-radius:50%; line-height:36px; text-align:center; background:#9c0; color:#fff;}
+allday hour people.zero {border:#cfcfcf 1px solid;}
+allday hour people div {width:36px; height:36px; border-radius:50%; line-height:36px; text-align:center; font-size:12px; background:#cfcfcf; color:#fff;}

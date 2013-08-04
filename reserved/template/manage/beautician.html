@@ -1,0 +1,31 @@
+{% extends 'manage/base.html' %}
+    {% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>姓名</th>
+            <th>昵称</th>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>等级</th>
+            <th>擅长</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for beau in btcs %}
+        <tr>
+            <td>{{ beau.id }}</td>
+            <td>{{ beau.bc_name}}</td>
+            <td>{{ beau.nickname}}</td>
+            <td>{{ beau.gendar }}</td>
+            <td>{{ beau.age }}</td>
+            <td>{{ beau.level }}</td>
+            <td>{% for gd in beau.goodat.all %} {{gd}}, {% endfor %}</td>
+            <td><button class="btn btn-primary" type="button">修改</button> <button class="btn btn-danger" type="button">删除</button></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

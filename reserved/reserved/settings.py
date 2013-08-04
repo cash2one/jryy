@@ -93,6 +93,10 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_PROCESSORS = (
+    'django.core.context_processors.request',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -129,6 +133,7 @@ INSTALLED_APPS = (
     # Customize Apps
     'service',
     'orders',
+    'roles',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -48,16 +48,16 @@ class Order(models.Model):
 
     user = models.ForeignKey(User)
     person = models.IntegerField(u'预约人数', default=1)
-    order_begin = models.DateField(u'开始时间')
-    order_end = models.DateField(u'结束时间')
+    order_begin = models.DateTimeField(u'开始时间')
+    order_end = models.DateTimeField(u'结束时间')
     order_room = models.ForeignKey(SerRoom)    # 预约房间
     order_beautician = models.ForeignKey(Beautician)    # 预约美容师
-
+    ser_chose =  models.ManyToManyField(Service)    # 所选项目
     merchant = models.ForeignKey(SerMerchant)
 
-    order_state = models.IntegerField(u'订单状态', default=0)
-    create_time = models.DateField(u'创建时间', auto_now_add=True)
-    update_time = models.DateField(u'创建时间', auto_now_add=True)
+    order_state = models.IntegerField(u'订单状态',choices=ORDER_STATES, default=0)
+    create_time = models.DateTimeField(u'创建时间', auto_now_add=True)
+    update_time = models.DateTimeField(u'创建时间', auto_now_add=True)
 
     class Meta:
         verbose_name_plural = '订单'
@@ -72,7 +72,7 @@ class OrderDetail(models.Model):
     unit = models.IntegerField(u'预约时间', default=0)
 
     class Meta:
-        verbose_name_plural = '订单'
+        verbose_name_plural = '订单详情'
 
 
 class CustomerPreference(models.Model):

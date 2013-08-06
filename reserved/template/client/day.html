@@ -13,121 +13,23 @@
   <a href="#"><help>?</help></a>
 </nav>
 <allday>
-  <topinfo>2013年8月9日<span>周五</span></topinfo>
-  <a href="project.html"><hour>
-    <times class="">10:00</times>
+<topinfo>{{query_date | date:"Y年m月d日"}}<span>{{query_date | date:"D"}}</span></topinfo>
+  {% for st in day_status %}
+  <a href="/client/order/{{ query_date | date:"Ymd" }}/{{ st.time | date:"Hi"}}"><hour {% if st.status == 2 %} class="full"{% endif %}>
+      <times class="{% if st.status == 1 %}part{%elif st.status == 2%}full{%else%}{%endif%}">{{ st.time | date:"H:i"}}</times>
     <people>
+    {%if st.status == 2%}
+      <div class="zero">客满</div>
+    {% else%}
       <div class="number">6</div>
+    {% endif %}
     </people>
     <people>
       <div class="photo"><img src="img/photo1.png" alt="apple"></div>
     </people>
   </hour></a>
-  <a href="project.html"><hour>
-    <times class="">10:30</times>
-    <people>
-      <div class="number">6</div>
-    </people>
-    <people>
-      <div class="photo"><img src="img/photo1.png" alt="apple"></div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour>
-    <times class="">11:00</times>
-    <people>
-      <div class="number">6</div>
-    </people>
-    <people>
-      <div class="photo"><img src="img/photo1.png" alt="apple"></div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour>
-    <times class="">11:30</times>
-    <people>
-      <div class="number">6</div>
-    </people>
-    <people>
-      <div class="photo"><img src="img/photo1.png" alt="apple"></div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour>
-    <times class="">12:00</times>
-    <people>
-      <div class="number">3</div>
-    </people>
-    <people>
-      <div class="photo"><img src="img/photo1.png" alt="apple"></div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour>
-    <times class="part">12:30</times>
-    <people>
-      <div class="number">2</div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour>
-    <times class="part">13:00</times>
-    <people>
-      <div class="number">3</div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour>
-    <times class="">13:30</times>
-    <people>
-      <div class="number">2</div>
-    </people>
-    <people>
-      <div class="photo"><img src="img/photo1.png" alt="apple"></div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour>
-    <times class="">14:00</times>
-    <people>
-      <div class="number">2</div>
-    </people>
-    <people>
-      <div class="photo"><img src="img/photo1.png" alt="apple"></div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour>
-    <times class="">14:30</times>
-    <people>
-      <div class="number">3</div>
-    </people>
-    <people>
-      <div class="photo"><img src="img/photo1.png" alt="apple"></div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour class="full">
-    <times>15:00</times>
-    <people class="zero">
-      <div>客满</div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour class="full">
-    <times>15:30</times>
-    <people class="zero">
-      <div>客满</div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour>
-    <times class="">16:00</times>
-    <people>
-      <div class="number">1</div>
-    </people>
-    <people>
-      <div class="photo"><img src="img/photo1.png" alt="apple"></div>
-    </people>
-  </hour></a>
-  <a href="project.html"><hour>
-    <times class="">16:30</times>
-    <people>
-      <div class="number">2</div>
-    </people>
-    <people>
-      <div class="photo"><img src="img/photo1.png" alt="apple"></div>
-    </people>
-  </hour></a>
+    {% endfor %}
+
 </allday>
 </body>
 </html>

@@ -80,6 +80,9 @@ def order(request, datestr, timestr):
     avi_beauticians = []
     orders = Order.objects.filter(order_begin__gte=query_time.strftime('%Y-%m-%d 00:00:00'), order_end__lt=(query_time + datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))
     beauticians = Beautician.objects.filter(merchant__id = 1)
+
+
+
     for btc in beauticians:
         orders = Order.objects.filter(merchant = btc, order_begin__gte=query_time.strftime('%Y-%m-%d %H:%M:00'), order_end__lt=(query_time + datetime.timedelta(seconds=60*60)).strftime('%Y-%m-%d %H:%M:00'))
         if orders.count() > 0:
@@ -92,4 +95,16 @@ def order(request, datestr, timestr):
         'query_time': timestr
         }
 
-    return render_to_response('client/order.html', context, context_instance=RequestContext(request))
+    return render_to_response('client/project.html', context, context_instance=RequestContext(request))
+
+
+
+def project(request):
+    """
+    预订操作, 选择项目
+    """
+    context = {
+        'query_time': '',
+        }
+
+    return render_to_response('client/project.html', context, context_instance=RequestContext(request))

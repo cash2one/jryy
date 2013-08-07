@@ -93,6 +93,11 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.RemoteUserBackend',
+)
+
 TEMPLATE_PROCESSORS = (
     'django.core.context_processors.request',
 )

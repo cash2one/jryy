@@ -30,7 +30,7 @@
   <h2>{{ type.type }}</h2>
   <section class="{% cycle 's_0' 's_1' 's_2' %}">
     {% for service in type.services %}
-    <a href="people.html"><project><p>{{ service.ch_name }}<span>{{ service.time_spent }}分钟</span></p></project></a>
+    <a href="/client/order/{{query_date_str}}/{{query_time_str}}"><project><p>{{ service.ch_name }}<span>{{ service.time_spent }}分钟</span></p></project></a>
     {% endfor %}
   </section>
 {% endfor %}

@@ -15,7 +15,7 @@
 <allday>
 <topinfo>{{query_date | date:"Y年m月d日"}}<span>{{query_date | date:"D"}}</span></topinfo>
   {% for st in day_status %}
-  <a href="/client/order/{{ query_date | date:"Ymd" }}/{{ st.time | date:"Hi"}}"><hour {% if st.status == 2 %} class="full"{% endif %}>
+  <a href="/client/choose_service/{{ query_date | date:"Ymd" }}/{{ st.time | date:"Hi"}}"><hour {% if st.status == 2 %} class="full"{% endif %}>
       <times class="{% if st.status == 1 %}part{%elif st.status == 2%}full{%else%}{%endif%}">{{ st.time | date:"H:i"}}</times>
     <people>
     {%if st.status == 2%}

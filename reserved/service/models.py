@@ -43,7 +43,7 @@ class Service(models.Model):
     merchant = models.ForeignKey(SerMerchant)
     ch_name = models.CharField(u'服务名', max_length=200)
     en_name = models.CharField(u'英文', max_length=200)
-    ser_img =  models.ImageField(u'图片',upload_to='./upload/service/', height_field=600, width_field=300, max_length=200, blank=True)
+    ser_img =  models.ImageField(u'图片',upload_to='/Users/linzerd/github/jryy/reserved', height_field=600, width_field=300, max_length=200, blank=True)
     ser_type = models.ForeignKey(ServiceType,verbose_name=u'类别')
     time_spent = models.IntegerField(u'周期时间', default=0) # default minute unit
     ser_desc = models.TextField(u'项目描述')
@@ -84,7 +84,7 @@ class Beautician(models.Model):
     merchant = models.ForeignKey(SerMerchant)
     bc_name = models.CharField(u'姓名', max_length=200)
     nickname = models.CharField(u'昵称', max_length=200)
-    bc_img =  models.ImageField(upload_to='./upload/beautician/', height_field=600, width_field=300, max_length=200, blank=True)
+    bc_img =  models.ImageField(upload_to='/Users/linzerd/github/jryy/reserved/upload', max_length=200, blank=True)
     gender = models.IntegerField(u'性别', default=0, choices=GENDER_CHOICES)
     age = models.IntegerField(u'年龄', default=20)
     level = models.IntegerField(u'等级', default=20)

@@ -32,6 +32,7 @@ allday topinfo span{display:block; float:right;}
 allday hour {display:block; line-height:50px; padding:0 0 0 32px; background:url(/statics/img/bg_day_hour.png) left repeat-x; background-size:360px 50px; color:#fff;color:#9c0; font-size:18px;}
 allday hour times.part{color:#f93;}
 allday hour.full{color:#cfcfcf; background:url(/statics/img/bg_day_hour_full.png) left repeat-x; background-size:360px 50px;}
+allday hour p {float:right; margin:0 10px 0 0;}
 allday hour people {border:#9c0 1px solid; border-radius:50%; width:36px; height:36px; padding:1px; margin:5px 10px 0 0; float:right;}
 allday hour people .photo img{width:36px; height:36px; border-radius:50%;}
 allday hour people .number {width:36px; height:36px; border-radius:50%; line-height:36px; text-align:center; background:#9c0; color:#fff;}
@@ -39,10 +40,25 @@ allday hour people.zero {border:#cfcfcf 1px solid;}
 allday hour people div {width:36px; height:36px; border-radius:50%; line-height:36px; text-align:center; font-size:12px; background:#cfcfcf; color:#fff;}
 
 projects {background:url(/statics/img/bg_timeline.png) top left; background-size:360px 50px; display:block;}
-projects section:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}projects h2 {display:block; line-height:24px; padding:0 10px; background:#b1b6bb; color:#fff; font-size:14px; font-weight:normal;}
+projects section:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
+projects h2 {display:block; line-height:24px; padding:0 10px; background:#b1b6bb; color:#fff; font-size:14px; font-weight:normal;}
 projects section {display:block; padding:10px;}
 projects project {display:block; width:48%; margin:1%; height:80px; float:left; background:#cbe47e; color:#5b7900; position:relative;}
 projects project p{padding:6px 10px; font-size:20px;}
 projects project p span{display:block; position:absolute; bottom:6px; left:10px; color:#fff; font-size:12px;}
 projects section.s_1 project {background:#e4d07e; color:#63520a;}
 
+peoples {background:url(/statics/img/bg_timeline.png) top left; background-size:360px 50px; display:block; box-shadow:rgba(0,0,0,0.1) 0 8px 8px 0;}
+peoples section:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
+peoples h2 {display:block; line-height:24px; padding:0 10px; background:#b1b6bb; color:#fff; font-size:14px; font-weight:normal;}
+peoples section {display:block; padding:10px;}
+peoples section a {display:block; width:33%; float:left; text-align:center;}
+peoples section people {display:block; border:#9c0 2px solid; border-radius:50%; width:72px; height:72px; padding:2px; margin:5px auto; position:relative;}
+peoples section people.selected {border:#5a7800 2px solid;}
+peoples section people.selected:after {content: "selected"; display: block; width:28px; height:28px; border-radius:50%; text-indent:-999em; background:#5a7800 url(/statics/img/icon_ok.png) no-repeat -1px 2px; background-size:28px 28px; position:absolute; right:0; top:0;}
+peoples section people .photo img{width:72px; height:72px; border-radius:50%;}
+
+footer {display:block; position:fixed; bottom:0; width:100%; height:50px; background:#5a7800;}
+footer button{display:block; float:right; width:40%; height:50px; background:none; background-size:50px 50px; border:none; font-size:18px; color:#fff; text-align:center; line-height:50px;}
+footer button img{vertical-align:middle;}
+footer button:hover, footer button:focus{background-color:#9c0;}

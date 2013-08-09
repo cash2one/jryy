@@ -13,23 +13,28 @@
   <a href="#"><help>?</help></a>
 </nav>
 <allday>
-<topinfo>{{query_date | date:"Y年m月d日"}}<span>{{query_date | date:"D"}}</span></topinfo>
-  {% for st in day_status %}
-  <a href="/client/order/{{ query_date | date:"Ymd" }}/{{ st.time | date:"Hi"}}"><hour {% if st.status == 2 %} class="full"{% endif %}>
-      <times class="{% if st.status == 1 %}part{%elif st.status == 2%}full{%else%}{%endif%}">{{ st.time | date:"H:i"}}</times>
+  <topinfo>{{query_time | date:"Y年m月d日"}}<span></span></topinfo>
+  <a href="/client/day/{{ query_date_str }}"><hour>
+    <times class="">{{query_time | date:"H:i"}}</times>
     <people>
-    {%if st.status == 2%}
-      <div class="zero">客满</div>
-    {% else%}
-      <div class="number">6</div>
-    {% endif %}
+      <div class="number">3</div>
     </people>
     <people>
       <div class="photo"><img src="img/photo1.png" alt="apple"></div>
     </people>
   </hour></a>
-    {% endfor %}
-
 </allday>
+<projects>
+
+{% for type in services %}
+  <h2>{{ type.type }}</h2>
+  <section class="{% cycle 's_0' 's_1' 's_2' %}">
+    {% for service in type.services %}
+    <a href="people.html"><project><p>{{ service.ch_name }}<span>{{ service.time_spent }}分钟</span></p></project></a>
+    {% endfor %}
+  </section>
+{% endfor %}
+
+</projects> 
 </body>
 </html>

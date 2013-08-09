@@ -62,7 +62,7 @@ class SerRoom(models.Model):
     """
     merchant = models.ForeignKey(SerMerchant)
     rm_name = models.CharField(u'房间名', max_length=200)
-    rm_img =  models.ImageField(upload_to='./upload/rooms/', height_field=600, width_field=300, max_length=200)
+    rm_img =  models.ImageField(upload_to='./upload/rooms/', height_field=600, width_field=300, max_length=200, blank=True)
     support_service = models.ManyToManyField(Service)
     detail = models.TextField(u'房间详情')
 
@@ -93,3 +93,6 @@ class Beautician(models.Model):
 
     class Meta:
         verbose_name_plural = '美容师'
+
+    def __unicode__(self):
+        return self.bc_name

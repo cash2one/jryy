@@ -13,9 +13,9 @@
   <a href="#"><help>?</help></a>
 </nav>
 <allday>
-  <topinfo>2013年8月9日<span>周五</span></topinfo>
-  <a href="day.html"><hour>
-    <times class="">18:00</times>
+  <topinfo>{{query_time | date:"Y年m月d日"}}<span></span></topinfo>
+  <a href="/client/day/{{ query_date_str }}"><hour>
+    <times class="">{{query_time | date:"H:i"}}</times>
     <people>
       <div class="number">3</div>
     </people>
@@ -25,22 +25,16 @@
   </hour></a>
 </allday>
 <projects>
-  <h2>面部护理</h2>
-  <section>
-    <a href="people.html"><project><p>敏感修复<span>60分钟</span></p></project></a>
-    <a href="people.html"><project><p>驻颜抗衰<span>90分钟</span></p></project></a>
-    <a href="people.html"><project><p>美白淡斑<span>40分钟</span></p></project></a>
-    <a href="people.html"><project><p>眼部特护<span>30分钟</span></p></project></a>
-    <a href="people.html"><project><p>敏感修复<span>60分钟</span></p></project></a>
+
+{% for type in services %}
+  <h2>{{ type.type }}</h2>
+  <section class="{% cycle 's_0' 's_1' 's_2' %}">
+    {% for service in type.services %}
+    <a href="people.html"><project><p>{{ service.ch_name }}<span>{{ service.time_spent }}分钟</span></p></project></a>
+    {% endfor %}
   </section>
-  <h2>雕塑美体</h2>
-  <section class="s_1">
-    <a href="people.html"><project><p>敏感修复<span>60分钟</span></p></project></a>
-    <a href="people.html"><project><p>敏感修复<span>60分钟</span></p></project></a>
-    <a href="people.html"><project><p>敏感修复<span>60分钟</span></p></project></a>
-    <a href="people.html"><project><p>敏感修复<span>60分钟</span></p></project></a>
-    <a href="people.html"><project><p>敏感修复<span>60分钟</span></p></project></a>
-  </section>
+{% endfor %}
+
 </projects> 
 </body>
 </html>

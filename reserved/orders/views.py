@@ -3,14 +3,28 @@
 
 import datetime
 import random
+import json
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect,HttpResponse, HttpResponseForbidden, Http404
 from django.template import RequestContext
+from django.db.models.query import QuerySet
+from django.db import models
+
 
 from service.models import Service, ServiceType, Beautician, SerMerchant, SerRoom
 from orders.models import Order
 
+def toJSON(obj):
+   if isinstance(obj, QuerySet):
+       return simplejson.dumps(obj, cls=DjangoJSONEncoder)
+   if isinstance(obj, models.Model):
+       #do the same as above by making it a queryset first
+       set_obj = [obj]
+       set_str = simplejson.dumps(simplejson.loads(serialize('json', set_obj)))
+       #eliminate brackets in the beginning and the end
+       str_obj = set_str[1:len(set_str)-2]
+   return str_obj
 
 def calendar(request):
     """
@@ -81,22 +95,43 @@ def order(request, datestr, timestr):
     orders = Order.objects.filter(order_begin__gte=query_time.strftime('%Y-%m-%d 00:00:00'), order_end__lt=(query_time + datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))
     beauticians = Beautician.objects.filter(merchant__id = 1)
 
-
-
     for btc in beauticians:
         orders = Order.objects.filter(merchant = btc, order_begin__gte=query_time.strftime('%Y-%m-%d %H:%M:00'), order_end__lt=(query_time + datetime.timedelta(seconds=60*60)).strftime('%Y-%m-%d %H:%M:00'))
         if orders.count() > 0:
             continue
         avi_beauticians.append(btc)
+    """
+    选择项目
+    """
+    sertps = ServiceType.objects.all()
+    service_data = []
+    for tps in sertps:
+        tmp_service = {}
+        tmp_service['type'] = tps
+        typservices = Service.objects.filter(ser_type=tps)
+        tmp_service['services'] = typservices
+        service_data.append(tmp_service)
+    #json_data = toJSON(service_data)
 
     context = {
         'avi_beaticians': avi_beauticians,
-        'query_date': datestr,
-        'query_time': timestr
+        'services': service_data,
+        'query_date_str': datestr,
+        'query_time_str': timestr,
+        'query_time': query_time,
         }
 
     return render_to_response('client/project.html', context, context_instance=RequestContext(request))
 
+def social_login(request):
+    openid = request.POST.get('openid')
+    nickname = request.POST.get('nickname')
+    avatar = request.POST.get('avatar')
+    social = request.POST.get('platform')
+    ret = {}
+    ret['ret'] = 0
+    ret['msg'] = 'login ok'
+    return HttpResponse(json.dumps(ret), mimetype='application/json')
 
 
 def project(request):

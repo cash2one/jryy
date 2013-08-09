@@ -85,6 +85,29 @@ def day_detail(request, datestr):
 
     return render_to_response('client/day.html', {'day_status': day_status, 'query_date': query_date}, context_instance=RequestContext(request))
 
+def choose_service(request, datestr, timestr):
+    """
+    选择项目
+    """
+    query_time = datetime.datetime.strptime(datestr + timestr, '%Y%m%d%H%M')
+    sertps = ServiceType.objects.all()
+    service_data = []
+    for tps in sertps:
+        tmp_service = {}
+        tmp_service['type'] = tps
+        typservices = Service.objects.filter(ser_type=tps)
+        tmp_service['services'] = typservices
+        service_data.append(tmp_service)
+    #json_data = toJSON(service_data)
+
+    context = {
+        'services': service_data,
+        'query_date_str': datestr,
+        'query_time_str': timestr,
+        'query_time': query_time,
+        }
+    return render_to_response('client/project.html', context, context_instance=RequestContext(request))
+
 
 def order(request, datestr, timestr):
     """
@@ -121,7 +144,7 @@ def order(request, datestr, timestr):
         'query_time': query_time,
         }
 
-    return render_to_response('client/project.html', context, context_instance=RequestContext(request))
+    return render_to_response('client/beautician.html', context, context_instance=RequestContext(request))
 
 def social_login(request):
     openid = request.POST.get('openid')

@@ -7,4 +7,6 @@ urlpatterns = patterns('',
     url(r'^order/(?P<datestr>\d+)/(?P<timestr>\d+)', 'orders.views.order', name='order'),
     #social login
     url(r'^s_login$', 'orders.views.social_login', name='social_login'),
+    url(r'^init$', 'orders.views.init', name='init'),
+    url(r'^login$', 'orders.views.login', name='login'),
 )

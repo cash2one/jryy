@@ -10,9 +10,10 @@ from django.http import HttpResponseRedirect,HttpResponse, HttpResponseForbidden
 from django.template import RequestContext
 from django.db.models.query import QuerySet
 from django.db import models
+from django.contrib.auth.models import User
 
 
-from service.models import Service, ServiceType, Beautician, SerMerchant, SerRoom
+from service.models import Service, ServiceType, Beautician, SerMerchant, SerRoom, CardPool
 from orders.models import Order
 
 def toJSON(obj):
@@ -166,3 +167,70 @@ def project(request):
         }
 
     return render_to_response('client/project.html', context, context_instance=RequestContext(request))
+
+def init(request):
+    mobile = request.POST.get('mobile', '-1')
+    user = User.objects.filter(username=mobile)
+    ret = {}
+    if user.count() > 0:
+        ret['ret'] = 0
+        ret['msg'] = 'already user'
+    else:
+        members = CardPool.objects.filter(phoneno=mobile)
+        if members.count() > 0:
+            ret['ret'] = 1
+            ret['msg'] = 'u r a member not actived'
+        else:
+            ret['ret'] = -1
+            ret['msg'] = 'u can do nothing here'
+    return HttpResponse(json.dumps(ret), mimetype='application/json')
+
+def login(request):
+    mobile = request.POST.get('mobile', '-1')
+    password = request.POST.get('password', '-1')
+
+    user = User.objects.filter(username=mobile)
+    ret = {}
+    if user.count() > 0:
+        from django.contrib.auth import authenticate, login
+        print newuser.username, userform.cleaned_data['password']
+        #import pdb
+        #pdb.set_trace()
+        user = authenticate(username=mobile, password=password)
+        if not user:
+            ret['ret'] = -1
+            ret['msg'] = 'error pass'
+        else:
+            login(request, user)
+            ret['ret'] = 0
+            ret['msg'] = 'login ok'
+    else:
+        members = CardPool.objects.filter(phoneno=mobile)
+        if members.count() > 0:
+            user = User(
+                username = data['mobile'],
+                mobile = data['mobile'],
+                email = ''+data['mobile'] + '@qfpay.com',
+                user_type = ut,
+                state = 1,
+                is_staff = False,
+                is_active = True,
+                is_superuser = False,
+                last_login = now,
+                date_joined = now,
+                user_level = userlevel
+            )
+            user.set_password(password)
+            user.save()
+
+            if user.pk > 0:
+                members.update(user_status=1)
+                ret['ret'] = 0
+                ret['msg'] = 'create user success'
+            else:
+                ret['ret'] = -1
+                ret['msg'] = 'exception'
+        else:
+            ret['ret'] = -1
+            ret['msg'] = 'unhandler exception'
+    return HttpResponse(json.dumps(ret), mimetype='application/json')

@@ -59,6 +59,26 @@ peoples section people.selected:after {content: "selected"; display: block; widt
 peoples section people .photo img{width:72px; height:72px; border-radius:50%;}
 
 footer {display:block; position:fixed; bottom:0; width:100%; height:50px; background:#5a7800;}
-footer button{display:block; float:right; width:40%; height:50px; background:none; background-size:50px 50px; border:none; font-size:18px; color:#fff; text-align:center; line-height:50px;}
+footer button{display:block; float:right; width:45%; height:50px; background:none; background-size:50px 50px; border:none; font-size:18px; color:#fff; text-align:center; line-height:50px;}
+footer button.cancel{float:left; background:#6a8b05; width:35%; text-align:left;}
 footer button img{vertical-align:middle;}
 footer button:hover, footer button:focus{background-color:#9c0;}
+
+.overshadow {display:block; position:fixed; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:999;}
+card {display:block; position:relative; width:300px; background:#fdfcf0; z-index:9999; margin:10px auto; border-radius:8px; box-shadow:rgba(0,0,0,0.2) 0 8px 12px 0;}
+card h2 {height:50px; line-height:50px; color:#fff; text-align:center; font-weight:normal; background:#5a7800; border-radius:6px 6px 0 0;}
+card section {padding:10px; color:#5a7800; clear:both;}
+card section:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
+card section.timeBlock {height:40px; background:#fff; border-bottom:#5a7800 1px dashed;}
+card section.timeBlock .leftBlock {display:block; float:left; width:50%;}
+card section.timeBlock .leftBlock h3{line-height:16px; font-size:12px; font-weight:lighter;}
+card section.timeBlock .rightBlock {display:block; float:right; width:49%; text-align:right; font-size:34px; line-height:40px;}
+card section .leftBlock {display:block; float:left; width:60%;}
+card section .rightBlock {display:block; float:right; width:39%; text-align:right; font-size:34px; line-height:40px;}
+card project {display:block; width:100%; height:80px; background:#cbe47e; color:#5b7900; position:relative;}
+card project p{padding:6px 10px; font-size:20px;}
+card project p span{display:block; position:absolute; bottom:6px; left:10px; color:#fff; font-size:12px;}
+card section people {display:block; border:#9c0 2px solid; border-radius:50%; width:72px; height:72px; padding:2px; margin:0 auto; position:relative;}
+card section people .photo img{width:72px; height:72px; border-radius:50%;}
+card section.summary {text-align:center; clear:both;}
+card footer {position:inherit; border-radius:0 0 6px 6px;}

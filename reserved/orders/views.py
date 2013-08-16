@@ -145,15 +145,15 @@ def social_login(request):
     return HttpResponse(json.dumps(ret), mimetype='application/json')
 
 
-def project(request):
+def confirm(request):
     """
     预订操作, 选择项目
     """
+    print request.POST
     context = {
         'query_time': '',
-        }
-
-    return render_to_response('client/project.html', context, context_instance=RequestContext(request))
+    }
+    return render_to_response('client/confirm.html', context, context_instance=RequestContext(request))
 
 @csrf_exempt
 def init(request):

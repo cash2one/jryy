@@ -20,8 +20,13 @@
   </hour></a>
 </allday>
 <peoples>
-  <h2>请选择为您服务的技师</h2>
+<h2>请选择为您服务的技师</h2>
   <section>
+    {% for btc in avi_btcs %}
+    <a href="javascript:;" id={{ btc.id }}><people class="selected">
+        <div class="photo"><img src="/statics/img/photo1.png" alt="{{ btc.nickname }}"></div>
+    </people></a>
+    {% endfor %}
     <a href="#"><people class="selected">
       <div class="photo"><img src="/statics/img/photo1.png" alt="apple"></div>
     </people></a>

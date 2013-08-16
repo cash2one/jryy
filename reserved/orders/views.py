@@ -110,7 +110,7 @@ def choose_service(request, datestr, timestr):
     return render_to_response('client/project.html', context, context_instance=RequestContext(request))
 
 
-def order(request, datestr, timestr):
+def order(request, datestr, timestr, service):
     """
     预订操作, 选择美容技师
     """
@@ -118,28 +118,15 @@ def order(request, datestr, timestr):
     avi_beauticians = []
     orders = Order.objects.filter(order_begin__gte=query_time.strftime('%Y-%m-%d 00:00:00'), order_end__lt=(query_time + datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))
     beauticians = Beautician.objects.filter(merchant__id = 1)
-
     for btc in beauticians:
         orders = Order.objects.filter(merchant = btc, order_begin__gte=query_time.strftime('%Y-%m-%d %H:%M:00'), order_end__lt=(query_time + datetime.timedelta(seconds=60*60)).strftime('%Y-%m-%d %H:%M:00'))
         if orders.count() > 0:
             continue
         avi_beauticians.append(btc)
-    """
-    选择项目
-    """
-    sertps = ServiceType.objects.all()
-    service_data = []
-    for tps in sertps:
-        tmp_service = {}
-        tmp_service['type'] = tps
-        typservices = Service.objects.filter(ser_type=tps)
-        tmp_service['services'] = typservices
-        service_data.append(tmp_service)
-    #json_data = toJSON(service_data)
+    print avi_beauticians
 
     context = {
-        'avi_beaticians': avi_beauticians,
-        'services': service_data,
+        'avi_btcs': avi_beauticians,
         'query_date_str': datestr,
         'query_time_str': timestr,
         'query_time': query_time,

@@ -96,3 +96,25 @@ class Beautician(models.Model):
 
     def __unicode__(self):
         return self.bc_name
+
+class CardPool(models.Model):
+    USE_STATUS = (
+            (0, u'未激活'),
+            (1, u'已激活'),
+            )
+
+    CARD_STATUS = (
+            (0, u'未激活'),
+            (1, u'已激活'),
+            )
+
+    merchant = models.ForeignKey(SerMerchant)
+    cardnu = models.CharField(u'卡号', max_length=22, blank=True)
+    phoneno = models.CharField(u'手机号', max_length=22, blank=True)
+    member_name = models.CharField(u'姓名', max_length=22, blank=True)
+    user_status = models.IntegerField(u'激活状态', default=0, choices=USE_STATUS)
+    card_status = models.IntegerField(u'状态', default=0, choices=CARD_STATUS)
+    consume_time = models.DateTimeField(u'激活时间', blank=True, null=True)
+    add_time = models.DateTimeField(u'创建时间', auto_now_add=True, blank=True)
+    update_time = models.DateTimeField(u'创建时间', auto_now_add=True, blank=True)
+

@@ -11,7 +11,7 @@ from django.template import RequestContext
 from django.db.models.query import QuerySet
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.views.decorators.csrf import csrf_exempt
 
 from service.models import Service, ServiceType, Beautician, SerMerchant, SerRoom, CardPool
 from orders.models import Order
@@ -168,6 +168,7 @@ def project(request):
 
     return render_to_response('client/project.html', context, context_instance=RequestContext(request))
 
+@csrf_exempt
 def init(request):
     mobile = request.POST.get('mobile', '-1')
     user = User.objects.filter(username=mobile)
@@ -185,6 +186,7 @@ def init(request):
             ret['msg'] = 'u can do nothing here'
     return HttpResponse(json.dumps(ret), mimetype='application/json')
 
+@csrf_exempt
 def login(request):
     mobile = request.POST.get('mobile', '-1')
     password = request.POST.get('password', '-1')

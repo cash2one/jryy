@@ -4,46 +4,84 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>佳人有约</title>
-<link href="/statics/css/all_android.css" rel="stylesheet" type="text/css">
+<link href="/statics/css/all_android.css" rel="stylesheet" type="text/css" />
+<script src="/statics/js/jquery.js"></script>
 </head>
 
 <body>
+<div class="overshadow" style="display:none;"></div>
 <nav>
   <h1><a href="javascript:history.go(-1)">佳人有约美容院</a></h1>
   <a href="#"><help>?</help></a>
 </nav>
 <allday>
   <topinfo>2013年8月9日<span>周五</span></topinfo>
-  <a href="day.html"><hour>
+  <a href="/client/choose_service/{{ query_date_str }}/{{ query_time_str}}"><hour>
     <times class="">18:00</times>
     <p>敏感修复</p>
   </hour></a>
 </allday>
 <peoples>
-  <h2>请选择为您服务的技师</h2>
+<h2>请选择为您服务的技师</h2>
   <section>
-    <a href="#"><people class="selected">
-      <div class="photo"><img src="/statics/img/photo1.png" alt="apple"></div>
+
+    {% for btc in avi_btcs %}
+    <a class="ts" href="javascript:;" id={{ btc.id }}><people>
+        <div class="photo"><img src="/statics/img/photo1.png" alt="{{ btc.nickname }}"></div>
     </people></a>
-    <a href="#"><people>
-      <div class="photo"><img src="/statics/img/photo2.png" alt="apple"></div>
-    </people></a>
-    <a href="#"><people>
-      <div class="photo"><img src="/statics/img/photo3.png" alt="apple"></div>
-    </people></a>
-    <a href="#"><people>
-      <div class="photo"><img src="/statics/img/photo4.png" alt="apple"></div>
-    </people></a>
-    <a href="#"><people>
-      <div class="photo"><img src="/statics/img/photo5.png" alt="apple"></div>
-    </people></a>
-    <a href="#"><people>
-      <div class="photo"><img src="/statics/img/photo6.png" alt="apple"></div>
-    </people></a>
+    {% endfor %}
+
   </section>
 </peoples> 
+
+<card style="display:none;">
+  <h2>预约单</h2>
+  <section class="timeBlock">
+    <div class="leftBlock"><h3>2013年</h3><p>8月11日 周日</p></div>
+    <div class="rightBlock"><p>14:30</p></div>
+  </section>
+  <section>
+    <div class="leftBlock"><project><p>敏感修复<span>60分钟</span></p></project></div>
+    <div class="rightBlock">
+      <people class="selected">
+        <div class="photo"><img src="statics/img/photo1.png" alt="apple"></div>
+      </people>
+    </div>
+  </section>
+  <section>
+    <div class="leftBlock"><project><p>眼部特护<span>30分钟</span></p></project></div>
+    <div class="rightBlock">
+      <people class="selected">
+        <div class="photo"><img src="statics/img/photo1.png" alt="apple"></div>
+      </people>
+    </div>
+  </section>
+  <section class="summary">
+    <p>共约90分钟，由 Apple 为您服务</p>
+  </section>
+  <footer>
+   <button id="cancel" class="cancel"><img src="/statics/img/icon_cancel.png" width="50" height="50" alt="ok">重选</button>
+   <button id="confirm" class="ok"><img src="/statics/img/icon_ok.png" width="50" height="50" alt="ok">确认</button>
+  </footer>
+</card>
+
 <footer>
- <button class="ok"><img src="/statics/img/icon_ok.png" width="50" height="50" alt="ok">确认</button>
+ <button id="ok" class="ok"><img src="/statics/img/icon_ok.png" width="50" height="50" alt="ok">确认</button>
 </footer>
+<script>
+    $('.ts').toggle(function(){ $(this).find('people').addClass('selected');}, function(){ $(this).find('people').removeClass('selected');});
+
+    $('button#ok').click(function(){
+        $('people').hide();
+        $('card').show();
+        $('div.overshadow').show();
+    });
+
+    $('button#cancel').click(function(){
+        $('people').show();
+        $('card').hide();
+        $('div.overshadow').hide();
+    });
+</script>
 </body>
 </html>

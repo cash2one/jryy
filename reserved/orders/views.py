@@ -177,6 +177,7 @@ def init(request):
 def login(request):
     mobile = request.POST.get('mobile', '-1')
     password = request.POST.get('password', '-1')
+    now = datetime.datetime.now()
 
     user = User.objects.filter(username=mobile)
     ret = {}
@@ -197,17 +198,13 @@ def login(request):
         members = CardPool.objects.filter(phoneno=mobile)
         if members.count() > 0:
             user = User(
-                username = data['mobile'],
-                mobile = data['mobile'],
-                email = ''+data['mobile'] + '@qfpay.com',
-                user_type = ut,
-                state = 1,
+                username = mobile,
+                email = mobile + '@qfpay.com',
                 is_staff = False,
                 is_active = True,
                 is_superuser = False,
                 last_login = now,
                 date_joined = now,
-                user_level = userlevel
             )
             user.set_password(password)
             user.save()

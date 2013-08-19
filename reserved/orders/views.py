@@ -114,6 +114,7 @@ def order(request, datestr, timestr, service):
     """
     预订操作, 选择美容技师
     """
+    print request.user
     query_time = datetime.datetime.strptime(datestr + timestr, '%Y%m%d%H%M')
     avi_beauticians = []
     orders = Order.objects.filter(order_begin__gte=query_time.strftime('%Y-%m-%d 00:00:00'), order_end__lt=(query_time + datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))
@@ -183,7 +184,6 @@ def login(request):
     ret = {}
     if user.count() > 0:
         from django.contrib.auth import authenticate, login
-        print newuser.username, userform.cleaned_data['password']
         #import pdb
         #pdb.set_trace()
         user = authenticate(username=mobile, password=password)
@@ -194,6 +194,7 @@ def login(request):
             login(request, user)
             ret['ret'] = 0
             ret['msg'] = 'login ok'
+            ret['sessionid'] = request.session.session_key
     else:
         members = CardPool.objects.filter(phoneno=mobile)
         if members.count() > 0:

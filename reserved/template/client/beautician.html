@@ -72,12 +72,18 @@
  <button id="ok" class="ok"><img src="/statics/img/icon_ok.png" width="50" height="50" alt="ok">确认</button>
 </footer>
 <script>
-    $('.ts').toggle(function(){ $(this).find('people').addClass('selected');}, function(){ $(this).find('people').removeClass('selected');});
+    $('.ts').click(
+    function(){
+        $('people').removeClass('selected');
+        $(this).find('people').addClass('selected');
+    }
+    );
 
     $('button#ok').click(function(){
         $('people').hide();
         $('nav').hide();
         $('allday').hide();
+        $('peoples').hide();
         $('card').show();
         $('div.overshadow').show();
     });
@@ -86,6 +92,7 @@
         $('people').show();
         $('nav').show();
         $('allday').show();
+        $('peoples').show();
         $('card').hide();
         $('div.overshadow').hide();
     });

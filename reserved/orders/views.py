@@ -151,9 +151,27 @@ def confirm(request):
     预订操作, 选择项目
     """
     print request.POST
+
     context = {
         'query_time': '',
     }
+
+    btcs = Beautician.objects.filter(id=1)
+    service = Service.objects.filter(id=1)
+
+    Order.objects.create(
+        user = request.user,
+        person = 1,
+        order_begin = datetime.datetime.now(),
+        order_end = datetime.datetime.now(),
+        order_room = None,
+        order_beautician = None,
+        ser_chose = None,
+        merchant = None,
+        order_state = 0,
+        create_time = datetime.datetime.now(),
+        update_time = datetime.datetime.now(),
+            )
     return render_to_response('client/confirm.html', context, context_instance=RequestContext(request))
 
 @csrf_exempt

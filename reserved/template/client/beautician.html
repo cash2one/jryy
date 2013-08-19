@@ -15,16 +15,15 @@
   <a href="#"><help>?</help></a>
 </nav>
 <allday>
-  <topinfo>2013年8月9日<span>周五</span></topinfo>
+  <topinfo>{{query_time | date:"Y年m月d日"}}<span>周五</span></topinfo>
   <a href="/client/choose_service/{{ query_date_str }}/{{ query_time_str}}"><hour>
-    <times class="">18:00</times>
+    <times class="">{{query_time | date:"H:i"}}</times>
     <p>敏感修复</p>
   </hour></a>
 </allday>
 <peoples>
 <h2>请选择为您服务的技师</h2>
   <section>
-
     {% for btc in avi_btcs %}
     <a class="ts" href="javascript:;" id={{ btc.id }}><people>
         <div class="photo"><img src="/statics/img/photo1.png" alt="{{ btc.nickname }}"></div>
@@ -36,9 +35,13 @@
 
 <card style="display:none;">
   <h2>预约单</h2>
+  <form action="/client/confirm">
+    <input type="hidden" name="date_begin" value="" />
+    <input type="hidden" name="btcs" />
+  </form>
   <section class="timeBlock">
-    <div class="leftBlock"><h3>2013年</h3><p>8月11日 周日</p></div>
-    <div class="rightBlock"><p>14:30</p></div>
+    <div class="leftBlock"><h3>{{query_time | date:"Y年"}}</h3><p>{{query_time | date:"m月d日"}} 周日</p></div>
+    <div class="rightBlock"><p>{{query_time | date:"H:i"}}</p></div>
   </section>
   <section>
     <div class="leftBlock"><project><p>敏感修复<span>60分钟</span></p></project></div>
@@ -73,15 +76,25 @@
 
     $('button#ok').click(function(){
         $('people').hide();
+        $('nav').hide();
+        $('allday').hide();
         $('card').show();
         $('div.overshadow').show();
     });
 
     $('button#cancel').click(function(){
         $('people').show();
+        $('nav').show();
+        $('allday').show();
         $('card').hide();
         $('div.overshadow').hide();
     });
+
+    $('button#confirm').click(function(){
+        $('form').submit();
+    });
+
+
 </script>
 </body>
 </html>

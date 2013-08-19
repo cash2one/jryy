@@ -50,7 +50,7 @@ class Order(models.Model):
     person = models.IntegerField(u'预约人数', default=1)
     order_begin = models.DateTimeField(u'开始时间')
     order_end = models.DateTimeField(u'结束时间')
-    order_room = models.ForeignKey(SerRoom)    # 预约房间
+    order_room = models.ForeignKey(SerRoom, null=True)    # 预约房间
     order_beautician = models.ForeignKey(Beautician)    # 预约美容师
     ser_chose =  models.ManyToManyField(Service)    # 所选项目
     merchant = models.ForeignKey(SerMerchant)

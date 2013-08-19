@@ -12,6 +12,7 @@ from django.db.models.query import QuerySet
 from django.db import models
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login
 
 from service.models import Service, ServiceType, Beautician, SerMerchant, SerRoom, CardPool
 from orders.models import Order
@@ -31,6 +32,7 @@ def calendar(request):
     """
     第一页 选择预约日期
     """
+    print request.user
     now = datetime.datetime.now()
     print now.isoweekday()
     start = now - datetime.timedelta(now.isoweekday())
@@ -175,7 +177,7 @@ def init(request):
     return HttpResponse(json.dumps(ret), mimetype='application/json')
 
 @csrf_exempt
-def login(request):
+def app_login(request):
     mobile = request.POST.get('mobile', '-1')
     password = request.POST.get('password', '-1')
     now = datetime.datetime.now()
@@ -183,7 +185,6 @@ def login(request):
     user = User.objects.filter(username=mobile)
     ret = {}
     if user.count() > 0:
-        from django.contrib.auth import authenticate, login
         #import pdb
         #pdb.set_trace()
         user = authenticate(username=mobile, password=password)
@@ -212,8 +213,11 @@ def login(request):
 
             if user.pk > 0:
                 members.update(user_status=1)
+                user = authenticate(username=mobile, password=password)
+                login(request, user)
                 ret['ret'] = 0
                 ret['msg'] = 'create user success'
+                ret['sessionid'] = request.session.session_key
             else:
                 ret['ret'] = -1
                 ret['msg'] = 'exception'

@@ -10,5 +10,5 @@ urlpatterns = patterns('',
     #social login
     url(r'^s_login$', 'orders.views.social_login', name='social_login'),
     url(r'^init$', 'orders.views.init', name='init'),
-    url(r'^login$', 'orders.views.login', name='login'),
+    url(r'^login$', 'orders.views.app_login', name='login'),
 )

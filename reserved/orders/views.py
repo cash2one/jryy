@@ -219,9 +219,9 @@ def app_login(request):
                 ret['msg'] = 'create user success'
                 ret['sessionid'] = request.session.session_key
             else:
-                ret['ret'] = -1
+                ret['ret'] = -9
                 ret['msg'] = 'exception'
         else:
-            ret['ret'] = -1
+            ret['ret'] = -10
             ret['msg'] = 'unhandler exception'
     return HttpResponse(json.dumps(ret), mimetype='application/json')

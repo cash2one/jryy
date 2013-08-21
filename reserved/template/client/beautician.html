@@ -11,7 +11,7 @@
 <body>
 <div class="overshadow" style="display:none;"></div>
 <nav>
-  <h1><a href="javascript:history.go(-1)">佳人有约美容院</a></h1>
+<h1><a href="javascript:history.go(-1)">{{ merchant.mer_name }}</a></h1>
   <a href="#"><help>?</help></a>
 </nav>
 <allday>
@@ -35,9 +35,9 @@
 
 <card style="display:none;">
   <h2>预约单</h2>
-  <form action="/client/confirm">
+  <form action="/client/confirm" method="post">
     <input type="hidden" name="date_begin" value="" />
-    <input type="hidden" name="btcs" />
+    <input type="hidden" name="btcs" value="" />
   </form>
   <section class="timeBlock">
     <div class="leftBlock"><h3>{{query_time | date:"Y年"}}</h3><p>{{query_time | date:"m月d日"}} 周日</p></div>

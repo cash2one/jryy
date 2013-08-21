@@ -51,13 +51,13 @@ class Order(models.Model):
     order_begin = models.DateTimeField(u'开始时间')
     order_end = models.DateTimeField(u'结束时间')
     order_room = models.ForeignKey(SerRoom, null=True)    # 预约房间
-    order_beautician = models.ForeignKey(Beautician)    # 预约美容师
+    order_beautician = models.ForeignKey(Beautician, null=True)    # 预约美容师
     ser_chose =  models.ManyToManyField(Service)    # 所选项目
     merchant = models.ForeignKey(SerMerchant)
 
     order_state = models.IntegerField(u'订单状态',choices=ORDER_STATES, default=0)
     create_time = models.DateTimeField(u'创建时间', auto_now_add=True)
-    update_time = models.DateTimeField(u'创建时间', auto_now_add=True)
+    update_time = models.DateTimeField(u'更新时间', auto_now=True)
 
     class Meta:
         verbose_name_plural = '订单'

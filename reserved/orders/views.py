@@ -33,7 +33,20 @@ def calendar(request):
     第一页 选择预约日期
     """
     print request.user
+    if request.user.is_anonymous():
+        return HttpResponse('not login')
     now = datetime.datetime.now()
+    cards = CardPool.objects.filter(phoneno=request.user.username)
+    if cards.count() > 0:
+        merchant = cards[0].merchant
+        print merchant
+    else:
+        print 'exception'
+        return HttpResponse('exception')
+    orders = Order.objects.filter(user=request.user, merchant=merchant, order_begin__gt=now)
+    if orders.count() > 0:
+        return HttpResponseRedirect('/client/myorder')
+
     print now.isoweekday()
     start = now - datetime.timedelta(now.isoweekday())
     weeks = []
@@ -43,7 +56,15 @@ def calendar(request):
             day_data = {}
             day = start + datetime.timedelta(days=7 * i + j)
             day_data['datedata'] = day
-            day_data['order_status'] = random.randint(0, 2)
+            orders = Order.objects.filter(merchant=merchant, order_begin__gt=day.strftime('%Y-%m-%d 00:00:00'), order_begin__lt=day.strftime('%Y-%m-%d 23:59:59'))
+            if orders.count() > 3:
+                day_data['order_status'] = 2
+            elif orders.count() > 0:
+                day_data['order_status'] = 1
+            else:
+                day_data['order_status'] = 0
+
+            #day_data['order_status'] = random.randint(0, 2)
             if now > day:
                 day_data['today_tag'] = -1
             elif now < day:
@@ -54,12 +75,29 @@ def calendar(request):
             days.append(day_data)
             #print days[i].day
         weeks.append(days)
-    return render_to_response('client/calendar.html', {'weeks':weeks}, context_instance=RequestContext(request))
+    context = {
+            'weeks': weeks,
+            'merchant': merchant,
+            }
+    return render_to_response('client/calendar.html', context, context_instance=RequestContext(request))
 
 def day_detail(request, datestr):
     """
     第二页 选择时间
     """
+    print request.user
+    if request.user.is_anonymous():
+        return HttpResponse('not login')
+    now = datetime.datetime.now()
+    cards = CardPool.objects.filter(phoneno=request.user.username)
+    if cards.count() > 0:
+        merchant = cards[0].merchant
+        print merchant
+    else:
+        print 'exception'
+        return HttpResponse('exception')
+
+
     query_date = datetime.datetime.strptime(datestr, '%Y%m%d')
     now = datetime.datetime.now()
     open_hour = 10
@@ -85,13 +123,30 @@ def day_detail(request, datestr):
         daydata['time'] = this_time
         day_status.append(daydata)
         print status
-
-    return render_to_response('client/day.html', {'day_status': day_status, 'query_date': query_date}, context_instance=RequestContext(request))
+    context = {
+            'merchant': merchant,
+            'day_status': day_status,
+            'query_date': query_date,
+            }
+    return render_to_response('client/day.html', context, context_instance=RequestContext(request))
 
 def choose_service(request, datestr, timestr):
     """
     选择项目
     """
+    print request.user
+    if request.user.is_anonymous():
+        return HttpResponse('not login')
+    now = datetime.datetime.now()
+    cards = CardPool.objects.filter(phoneno=request.user.username)
+    if cards.count() > 0:
+        merchant = cards[0].merchant
+        print merchant
+    else:
+        print 'exception'
+        return HttpResponse('exception')
+
+
     query_time = datetime.datetime.strptime(datestr + timestr, '%Y%m%d%H%M')
     sertps = ServiceType.objects.all()
     service_data = []
@@ -104,6 +159,7 @@ def choose_service(request, datestr, timestr):
     #json_data = toJSON(service_data)
 
     context = {
+        'merchant': merchant,
         'services': service_data,
         'query_date_str': datestr,
         'query_time_str': timestr,
@@ -117,6 +173,19 @@ def order(request, datestr, timestr, service):
     预订操作, 选择美容技师
     """
     print request.user
+    if request.user.is_anonymous():
+        return HttpResponse('not login')
+    now = datetime.datetime.now()
+    cards = CardPool.objects.filter(phoneno=request.user.username)
+    if cards.count() > 0:
+        merchant = cards[0].merchant
+        print merchant
+    else:
+        print 'exception'
+        return HttpResponse('exception')
+
+
+    print request.user
     query_time = datetime.datetime.strptime(datestr + timestr, '%Y%m%d%H%M')
     avi_beauticians = []
     orders = Order.objects.filter(order_begin__gte=query_time.strftime('%Y-%m-%d 00:00:00'), order_end__lt=(query_time + datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))
@@ -129,6 +198,7 @@ def order(request, datestr, timestr, service):
     print avi_beauticians
 
     context = {
+        'merchant': merchant,
         'avi_btcs': avi_beauticians,
         'query_date_str': datestr,
         'query_time_str': timestr,
@@ -148,6 +218,7 @@ def social_login(request):
     return HttpResponse(json.dumps(ret), mimetype='application/json')
 
 
+@csrf_exempt
 def confirm(request):
     """
     预订操作, 选择项目
@@ -158,23 +229,28 @@ def confirm(request):
         'query_time': '',
     }
 
-    btcs = Beautician.objects.filter(id=1)
+    user = User.objects.get(id = request.user.id)
+    print user
+    btcs = Beautician.objects.get(id=1)
     service = Service.objects.filter(id=1)
+    merchant = SerMerchant.objects.get(id=1)
+    room = SerRoom.objects.get(id=1)
 
-    Order.objects.create(
-        user = request.user,
-        person = 1,
-        order_begin = datetime.datetime.now(),
-        order_end = datetime.datetime.now(),
-        order_room = None,
-        order_beautician = None,
-        ser_chose = None,
-        merchant = None,
-        order_state = 0,
-        create_time = datetime.datetime.now(),
-        update_time = datetime.datetime.now(),
-            )
-    return render_to_response('client/confirm.html', context, context_instance=RequestContext(request))
+    order = Order()
+    order.user = user
+    order.person = 1
+    order.order_begin = datetime.datetime.now()
+    order.order_end = datetime.datetime.now()
+    order.order_room = room
+    order.order_state = 0
+    order.merchant = merchant
+    order.order_beautician = btcs
+    order.save()
+
+    #order.ser_chose.add(service)
+
+    #return render_to_response('client/confirm.html', context, context_instance=RequestContext(request))
+    return HttpResponseRedirect('/client/calendar')
 
 @csrf_exempt
 def init(request):

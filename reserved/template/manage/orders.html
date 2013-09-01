@@ -38,19 +38,19 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>服务项目</th>
-            <th>类型</th>
-            <th>时间消耗</th>
+            <th>预约时间</th>
+            <th>预约美容师</th>
+            <th>预约项目</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        {% for ser in services %}
+        {% for order in orders %}
         <tr>
-            <td>{{ ser.id }}</td>
-            <td>{{ ser.ch_name }}</td>
-            <td>{{ ser.ser_type}}</td>
-            <td>{{ ser.time_spent }}分钟</td>
+            <td>{{ order.id }}</td>
+            <td>{{ order.order_begin }}</td>
+            <td>{{ order.order_beautician }}</td>
+            <td>{% for service in order.ser_chose.all %}{{ service }}{% endfor %}</td>
             <td><button class="btn btn-primary" type="button">修改</button> <button class="btn btn-danger" type="button">删除</button></td>
         </tr>
         {% endfor %}

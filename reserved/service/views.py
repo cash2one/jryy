@@ -73,7 +73,8 @@ def orders(request):
     订单管理
     '''
     userid = request.user.id
-    orders = Order.objects.all()
+    merch = SerMerchant.objects.get(id=3)
+    orders = Order.objects.filter(merchant=merch)
 
     if request.method == 'POST':
         form = OrderForm(request.POST)

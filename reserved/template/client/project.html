@@ -8,9 +8,9 @@
 </head>
 
 <body>
-<nav>
+<nav style="background:url({{ merchant.mer_img.url }}) center center; background-size:400px 170px;">
 <h1><a href="javascript:history.go(-1)">{{ merchant.mer_name }}</a></h1>
-  <a href="#"><help>?</help></a>
+  <a style="display:none;" href="#"><help>?</help></a>
 </nav>
 <allday>
   <topinfo>{{query_time | date:"Y年m月d日"}}<span></span></topinfo>
@@ -20,7 +20,7 @@
       <div class="number">3</div>
     </people>
     <people>
-      <div class="photo"><img src="img/photo1.png" alt="apple"></div>
+      <div class="photo"><img src="/media/beauticians/5_2.png" alt="Molly"></div>
     </people>
   </hour></a>
 </allday>

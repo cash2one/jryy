@@ -148,12 +148,12 @@ def choose_service(request, datestr, timestr):
 
 
     query_time = datetime.datetime.strptime(datestr + timestr, '%Y%m%d%H%M')
-    sertps = ServiceType.objects.all()
+    sertps = ServiceType.objects.filter(merchant=merchant)
     service_data = []
     for tps in sertps:
         tmp_service = {}
         tmp_service['type'] = tps
-        typservices = Service.objects.filter(ser_type=tps)
+        typservices = Service.objects.filter(merchant=merchant, ser_type=tps)
         tmp_service['services'] = typservices
         service_data.append(tmp_service)
     #json_data = toJSON(service_data)
@@ -183,13 +183,14 @@ def order(request, datestr, timestr, service):
     else:
         print 'exception'
         return HttpResponse('exception')
-
+    
+    service_m = Service.objects.get(id=service)
 
     print request.user
     query_time = datetime.datetime.strptime(datestr + timestr, '%Y%m%d%H%M')
     avi_beauticians = []
     orders = Order.objects.filter(order_begin__gte=query_time.strftime('%Y-%m-%d 00:00:00'), order_end__lt=(query_time + datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))
-    beauticians = Beautician.objects.filter(merchant__id = 1)
+    beauticians = Beautician.objects.filter(merchant=merchant)
     for btc in beauticians:
         orders = Order.objects.filter(merchant = btc, order_begin__gte=query_time.strftime('%Y-%m-%d %H:%M:00'), order_end__lt=(query_time + datetime.timedelta(seconds=60*60)).strftime('%Y-%m-%d %H:%M:00'))
         if orders.count() > 0:
@@ -203,9 +204,67 @@ def order(request, datestr, timestr, service):
         'query_date_str': datestr,
         'query_time_str': timestr,
         'query_time': query_time,
+        'service': service,
+        'service_m': service_m,
         }
 
     return render_to_response('client/beautician.html', context, context_instance=RequestContext(request))
+
+
+def del_order(request):
+    """
+    删除订单
+    """
+    if request.user.is_anonymous():
+        return HttpResponse('not login')
+    now = datetime.datetime.now()
+    cards = CardPool.objects.filter(phoneno=request.user.username)
+    if cards.count() > 0:
+        merchant = cards[0].merchant
+        print merchant
+    else:
+        print 'exception'
+        return HttpResponse('exception')
+
+
+    myorders = Order.objects.filter(user=request.user, order_begin__gte=now).delete()
+
+    return HttpResponseRedirect('/client/calendar')
+
+
+
+
+def myorder(request):
+    """
+    预订操作, 选择美容技师
+    """
+    print request.user
+    if request.user.is_anonymous():
+        return HttpResponse('not login')
+    now = datetime.datetime.now()
+    cards = CardPool.objects.filter(phoneno=request.user.username)
+    if cards.count() > 0:
+        merchant = cards[0].merchant
+        print merchant
+    else:
+        print 'exception'
+        return HttpResponse('exception')
+
+
+    myorders = Order.objects.filter(user=request.user, order_begin__gte=now)
+
+    context = {
+        'merchant': merchant,
+        'myorders': myorders,
+        'myorder': myorders[0],
+        'services': [val for val in myorders[0].ser_chose.all()]
+        }
+
+    return render_to_response('client/myorder.html', context, context_instance=RequestContext(request))
+
+
+
+
 
 def social_login(request):
     openid = request.POST.get('openid')
@@ -228,26 +287,35 @@ def confirm(request):
     context = {
         'query_time': '',
     }
+    if request.user.is_anonymous():
+        return HttpResponse('not login')
+    now = datetime.datetime.now()
+    cards = CardPool.objects.filter(phoneno=request.user.username)
+    if cards.count() > 0:
+        merchant = cards[0].merchant
+        print merchant
+    else:
+        print 'exception'
+        return HttpResponse('exception')
 
-    user = User.objects.get(id = request.user.id)
-    print user
-    btcs = Beautician.objects.get(id=1)
-    service = Service.objects.filter(id=1)
-    merchant = SerMerchant.objects.get(id=1)
+    btcs = Beautician.objects.get(id=request.POST.get('bt_id'))
+    service = Service.objects.filter(id=request.POST.get('ser_id'))
     room = SerRoom.objects.get(id=1)
+    order_time = datetime.datetime.strptime(request.POST.get('query_time'), "%Y %m %d %H:%M") 
+    end_time = order_time + datetime.timedelta(seconds=60*60)
 
     order = Order()
-    order.user = user
+    order.user = request.user
     order.person = 1
-    order.order_begin = datetime.datetime.now()
-    order.order_end = datetime.datetime.now()
+    order.order_begin = order_time
+    order.order_end = end_time
     order.order_room = room
     order.order_state = 0
     order.merchant = merchant
     order.order_beautician = btcs
     order.save()
 
-    #order.ser_chose.add(service)
+    order.ser_chose.add(service[0])
 
     #return render_to_response('client/confirm.html', context, context_instance=RequestContext(request))
     return HttpResponseRedirect('/client/calendar')

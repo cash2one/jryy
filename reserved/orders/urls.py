@@ -6,6 +6,8 @@ urlpatterns = patterns('',
     url(r'^choose_service/(?P<datestr>\d+)/(?P<timestr>\d+)', 'orders.views.choose_service', name='choose_service'),
     url(r'^order/(?P<datestr>\d+)/(?P<timestr>\d+)/(?P<service>\d+)', 'orders.views.order', name='order'),
     url(r'^confirm$', 'orders.views.confirm', name='confirm'),
+    url(r'^myorder$', 'orders.views.myorder', name='myorder'),
+    url(r'^del_order$', 'orders.views.del_order', name='del_order'),
 
     #social login
     url(r'^s_login$', 'orders.views.social_login', name='social_login'),

@@ -4,12 +4,12 @@ from django.http import HttpResponseRedirect,HttpResponse, HttpResponseForbidden
 from django.template import RequestContext
 from django.contrib.auth.decorators import user_passes_test, login_required
 
-from models import Service, ServiceType, Beautician, SerMerchant, SerRoom
+from models import Service, ServiceType, Beautician, SerMerchant, SerRoom, CardPool
 from orders.models import Order
 
 from forms import LoginForm
 from forms import ServiceForm
-from forms import OrderForm
+from forms import OrderForm, CardPoolForm
 
 @user_passes_test(lambda u: u.is_authenticated(), login_url='/signin')
 def detail(request):
@@ -92,6 +92,29 @@ def orders(request):
     return render_to_response('manage/orders.html', {'form':form,'orders':orders}, context_instance=RequestContext(request))
 
 
+@user_passes_test(lambda u: u.is_authenticated(), login_url='/signin')
+def members(request):
+    '''
+    会员管理
+    '''
+    userid = request.user.id
+    merch = SerMerchant.objects.get(id=3)
+    members = CardPool.objects.filter(merchant=merch)
+
+    if request.method == 'POST':
+        form = CardPoolForm(request.POST)
+        if form.is_valid():
+            card = form.save(commit=False)
+            #merch = SerMerchant.objects.get(mer_founder=request.user)
+            card.merchant = merch
+            card.save()
+            return HttpResponseRedirect('/members')
+        else:
+            print 'error'
+    else:
+        form = CardPoolForm() #获得表单对象
+    return render_to_response('manage/members.html', {'form':form,'members':members}, context_instance=RequestContext(request))
+
 
 
 def signin(request):
@@ -104,7 +127,7 @@ def signin(request):
             user = authenticate(username=loginform.cleaned_data['username'], password=loginform.cleaned_data['password'])
             print 'auth',user
             login(request, user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/orders')
         else:
             return render_to_response('manage/login.html',
                                       {'loginform': loginform, 'username':request.POST['username']},

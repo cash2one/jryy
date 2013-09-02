@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 #from django.utils.translation import gettext_lazy as _
 from django.db.models import ObjectDoesNotExist
 
-from service.models import Service
+from service.models import Service, CardPool, SerMerchant
 from orders.models import Order
 
 def _(msg):
@@ -27,6 +27,8 @@ class LoginForm(forms.Form):
                 user = User.objects.get(email=m.group(0))
             else:
                 user = User.objects.get(username=self.data.get('username'))
+            if SerMerchant.objects.filter(mer_founder=user).count() < 1:
+                raise forms.ValidationError(_('你还没有美容院可以管理'))
         except ObjectDoesNotExist:
             raise forms.ValidationError(_('该用户不存在'))
         if user.is_active:
@@ -54,6 +56,12 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         exclude = ('merchant',)
+
+
+class CardPoolForm(forms.ModelForm):
+    class Meta:
+        model = CardPool 
+        exclude = ('merchant','consume_time', 'user_status', 'card_status')
 
 
 

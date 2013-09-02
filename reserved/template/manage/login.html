@@ -64,7 +64,7 @@
       <form class="form-signin" method="POST">
           {% csrf_token %}
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input name="username" type="text" class="input-block-level" placeholder="Email address">
+        <input name="username" type="text" class="input-block-level" placeholder="Username">
         {{loginform.errors.username.as_text}}
         <input name="password" type="password" class="input-block-level" placeholder="Password">
         {{loginform.errors.password.as_text}}

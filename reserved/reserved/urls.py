@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^calendar$', 'service.views.calendar', name='calendar'),
     url(r'^service$', 'service.views.service', name='service'),
     url(r'^orders$', 'service.views.orders', name='orders'),
+    url(r'^members$', 'service.views.members', name='members'),
 
 
     url(r'^signin$', 'service.views.signin', name='signin'),

@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>佳人有约</title>
+<link href="/statics/css/all_android.css" rel="stylesheet" type="text/css" />
+<script src="/statics/js/jquery.js"></script>
+</head>
+
+<body>
+<div class="overshadow"></div>
+<nav>
+<h1><a href="javascript:history.go(-1)">{{ merchant.mer_name }}</a></h1>
+  <a href="#"><help>?</help></a>
+</nav>
+
+<card>
+  <h2>预约单</h2>
+  <form action="/client/confirm" method="post">
+    <input type="hidden" name="date_begin" value="" />
+    <input type="hidden" name="btcs" value="" />
+  </form>
+  <section class="timeBlock">
+    <div class="leftBlock"><h3>{{myorder.order_begin | date:"Y年"}}</h3><p>{{myorder.order_begin| date:"m月d日"}} 周日</p></div>
+    <div class="rightBlock"><p>{{myorder.order_begin| date:"H:i"}}</p></div>
+  </section>
+  {% for service in services %}
+  <section>
+  <div class="leftBlock"><project><p>{{ service.ch_name }}<span>{{ service.time_spent }}分钟</span></p></project></div>
+    <div class="rightBlock">
+      <people class="selected">
+      <div class="photo"><img src="{{ myorder.order_beautician.bc_img.url }}" alt="{{ myorder.order_beautician }}"></div>
+      </people>
+    </div>
+  </section>
+  {% endfor %}
+
+  <section class="summary">
+  <p>由{{myorder.order_beautician }} 为您服务</p>
+  </section>
+  <footer>
+   <button id="cancel" class="cancel"><img src="/statics/img/icon_cancel.png" width="50" height="50" alt="ok">取消</button>
+  </footer>
+</card>
+
+<script>
+    $('.ts').click(
+    function(){
+        $('people').removeClass('selected');
+        $(this).find('people').addClass('selected');
+    }
+    );
+
+
+    $('button#cancel').click(function(){
+        $('form').submit();
+        document.location = '/client/del_order';
+    });
+
+
+</script>
+</body>
+</html>

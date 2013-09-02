@@ -1,0 +1,107 @@
+{% extends 'manage/base.html' %}
+    {% block content %}
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">添加/修改会员</h4>
+        </div>
+        <form id="service-form" class="form-horizontal" action="" method="post">
+        <fieldset>
+        <div class="modal-body">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                <div>
+                {{ field }}
+                </div>
+                {{ field.errors }}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn" data-dismiss="modal">关闭</a>
+          <a href="javascript:$('form').submit()" class="btn btn-primary">保存</a>
+        </div>
+        </fieldset>
+        </form>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+    <div class="row-fluid"><div class="span1 offset9"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">添加</button> </div></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>卡号</th>
+            <th>电话号码</th>
+            <th>姓名</th>
+            <th>状态</th>
+            <th>激活时间</th>
+            <th>添加时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for member in members %}
+        <tr>
+            <td>{{ member.id }}</td>
+            <td>{{ member.cardnu }}</td>
+            <td>{{ member.phoneno }}</td>
+            <td>{{ member.member_name }}</td>
+            <td>{{ member.get_user_status_display }}</td>
+            <td>{{ member.consume_time }}</td>
+            <td>{{ member.add_time }}</td>
+            <td><button class="btn btn-primary" type="button">修改</button> <button class="btn btn-danger" type="button">删除</button></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
+    {% block bottom_require %}
+    <script src="/statics/js/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+$(document).ready(function(){
+
+    $('#service-form').validate(
+        {
+        rules: {
+            ch_name: {
+                minlength: 2,
+                required: true
+            },
+            en_name: {
+                minlength: 2,
+                required: true,
+            },
+            ser_img: {
+                required: false,
+            },
+            time_spent: {
+                min: 5,
+                required: true,
+                number: true,
+            }
+        },
+        highlight: function(element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');
+        },
+        success: function(element) {
+            element
+            .text('OK!').addClass('valid')
+            .closest('.control-group').removeClass('error').addClass('success');
+        },
+        debug: true,
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+}); // end document.ready
+    </script>
+    {% endblock %}
+

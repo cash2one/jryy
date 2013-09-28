@@ -76,6 +76,7 @@ def calendar(request):
             #print days[i].day
         weeks.append(days)
     context = {
+            'now': now,
             'weeks': weeks,
             'merchant': merchant,
             }
@@ -317,6 +318,14 @@ def confirm(request):
 
     order.ser_chose.add(service[0])
 
+    from django.core.mail import send_mail
+    content = u'%s预订了%s的%s。%s\n 详情链接：http://dev.zh.ongl.in/orders' % (request.user.first_name,\
+            order_time.strftime("%Y-%m-%d %H:%M:%S"),\
+            service[0].ch_name,\
+            btcs.bc_name)
+    send_mail('【佳人有约】您有新的预定了', content, 'noreply@qfpay.com',
+        [merchant.mer_founder.email, 'zhonglin@qfpay.com'], fail_silently=False)
+
     #return render_to_response('client/confirm.html', context, context_instance=RequestContext(request))
     return HttpResponseRedirect('/client/calendar')
 
@@ -370,6 +379,7 @@ def app_login(request):
                 last_login = now,
                 date_joined = now,
             )
+            user.first_name = members[0].member_name
             user.set_password(password)
             user.save()
 

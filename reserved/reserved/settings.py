@@ -9,6 +9,13 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+SERVER_EMAIL = 'noreply@qfpay.net'
+EMAIL_HOST = 'smtp.exmail.qq.com'
+EMAIL_PORT = '25'
+EMAIL_HOST_USER = 'noreply@qfpay.net'
+EMAIL_HOST_PASSWORD = 'qfpay2012'
+EMAIL_USE_TLS = False
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.

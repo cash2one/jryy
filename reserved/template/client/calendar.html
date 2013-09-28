@@ -11,7 +11,7 @@
 
     <header style="background:url({{ merchant.mer_img.url }}) center center; background-size:400px 170px;">
 <h1>{{ merchant.mer_name }}</h1>
-  <h2>2013年8月</h2>
+<h2>{{ now | date:"Y年m月"}}</h2>
   <a style="display:none;" href="#"><help>?</help></a>
 </header>
 <cad>
@@ -21,7 +21,7 @@
   {% for week in weeks %}
   <week>
         {% for day in week %}
-        <day class="{% if day.today_tag == -1%}unavailable{%elif day.today_tag == 0%}now_part{%elif day.order_status == 1%}part{% elif day.order_status == 2%}full{%else%}{% endif %}"><a href="/client/day/{{day.datedata | date:"Ymd" }}">{{ day.datedata.day }}{%if day.today_tag == 0 %}<span>今天</span>{% endif %}</a></day>
+        <day class="{% if day.today_tag == -1%}unavailable{%elif day.today_tag == 0%}now_part{%elif day.order_status == 1%}part{% elif day.order_status == 2%}full{%else%}{% endif %}"><a href="{% if day.today_tag == -1%}javascript:;{% else %}/client/day/{{day.datedata | date:"Ymd" }}{% endif %}">{{ day.datedata.day }}{%if day.today_tag == 0 %}<span>今天</span>{% endif %}</a></day>
         {% endfor %}
   </week>
   {% endfor %}

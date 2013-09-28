@@ -38,6 +38,7 @@
         <thead>
         <tr>
             <th>#</th>
+            <th>用户</th>
             <th>预约时间</th>
             <th>预约美容师</th>
             <th>预约项目</th>
@@ -48,6 +49,7 @@
         {% for order in orders %}
         <tr>
             <td>{{ order.id }}</td>
+            <td>{{ order.user.first_name }}</td>
             <td>{{ order.order_begin }}</td>
             <td>{{ order.order_beautician }}</td>
             <td>{% for service in order.ser_chose.all %}{{ service }}{% endfor %}</td>
